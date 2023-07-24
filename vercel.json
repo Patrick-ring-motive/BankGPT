@@ -1,6 +1,6 @@
 {
    "version": 2,
-   "name": "redirect",
+   "name": "bankgpt",
    "builds": [
       { "src": "index.mjs", "use": "@vercel/node" }
    ],
