@@ -2,8 +2,6 @@ void async function Main() {
   await import('/public/js/import/web-gpt-3.js');
   const Ж = 'Ж';
 
-
-
   let blocked = false;
   void async function Init() {
 
@@ -25,7 +23,8 @@ void async function Main() {
 
     }?.();
 
-    void function SendPrimer() {
+    void
+    function SendPrimer() {
 
       document.addEventListener('load', prime);
 
@@ -33,7 +32,9 @@ void async function Main() {
 
       async function prime() {
         await sleep(3000);
-        if (document.primed) { return; }
+        if (document.primed) {
+          return;
+        }
         document.primed = true;
         let botName = document.querySelector('h3').textContent.trim();
         let nameChange = '';
@@ -50,8 +51,7 @@ void async function Main() {
 
           (primer + 'I have some additional parameters that I would like you to follow for the remainder of the chat. I would like for you to refer to me as Member rather than User unless I give you another name. I will refer to Autocode.com as USAA and I would like you to do the same. I would like you to behave as if these specification had always been true and not based on my requesting it. So please do not remind me that I requested these things.')
 
-          , () => { });
-
+          , () => {});
 
       }
     }?.();
@@ -63,7 +63,6 @@ void async function Main() {
       setTimeout(resolve, ms);
     });
   }
-
 
   function encodeSnippets(code) {
     let codeChunks = code.split('```');
@@ -95,7 +94,9 @@ void async function Main() {
 
         codeChunks[i] = atob(codeChunks[i]);
 
-      } catch (e) { continue; }
+      } catch (e) {
+        continue;
+      }
     }
     code = codeChunks.join('```');
 
@@ -106,15 +107,17 @@ void async function Main() {
 
         codeBits[i] = atob(codeBits[i]);
 
-      } catch (e) { continue; }
+      } catch (e) {
+        continue;
+      }
     }
     code = codeBits.join('`');
-
 
     return code;
   }
 
-  function lcws(text1, text2) {/*longest common word subsequence*/
+  function lcws(text1, text2) {
+    /*longest common word subsequence*/
     text1 = text1.toLowerCase().replace(/[^a-z ]/g, ' ').replaceAll('  ', ' ').replaceAll('  ', ' ').split(' ');
     text2 = text2.toLowerCase().replace(/[^a-z ]/g, ' ').replaceAll('  ', ' ').replaceAll('  ', ' ').split(' ');
 
@@ -152,7 +155,6 @@ void async function Main() {
       return false;
 
     }
-
 
   }
 
@@ -195,10 +197,14 @@ void async function Main() {
                     /*  }  */
                   }
                 }
-              } catch (e) { continue; }
+              } catch (e) {
+                continue;
+              }
             }
           }
-        } catch (e) { continue; }
+        } catch (e) {
+          continue;
+        }
       }
       console.log(isSentenceModified);
       if (isSentenceModified) {
@@ -213,9 +219,7 @@ void async function Main() {
     }
     return passage;
 
-
   }
-
 
   function removeSentence(passage, sentence) {
     let passageList = passage.replaceAll('!', ' !.').replaceAll('?', ' ?.').split('.');
@@ -233,7 +237,6 @@ void async function Main() {
     }
     return p;
   }
-
 
   function removeSentenceContaining(passage, sentence) {
     let passageList = passage.replaceAll('!', ' !.').replaceAll('?', ' ?.').split('.');
@@ -293,7 +296,6 @@ void async function Main() {
     };
   };
 
-
   // wait until the whole message is done before printing;
   let sendMessageSync = async (username, content, messageListener) => {
     content = "In the context of USAA, answer the following. " + content + ". Let's work this out in a step by step way to be sure we have the right answer";
@@ -339,7 +341,9 @@ void async function Main() {
 
         tokens.push('"' + textList[i] + '"');
 
-      } catch (e) { continue; }
+      } catch (e) {
+        continue;
+      }
     }
 
     return tokens.join(' OR ');
@@ -355,7 +359,9 @@ void async function Main() {
     let webscrape = [];
     try {
       webscrape = JSON.parse(await fetchText('/webscraper?' + encodeURIComponent(listx)));
-    } catch (e) { webscrape = []; }
+    } catch (e) {
+      webscrape = [];
+    }
     console.log(webscrape);
     const webscrape_length = webscrape.length;
     let feeder = [];
@@ -363,19 +369,29 @@ void async function Main() {
       try {
         content = 'Additional information ' + listx + 'part ' + (i + 1) + ' of ' + webscrape_length + ' content:{' + webscrape[i] + '}';
 
-        if (content.length > 500) { content = content.replaceAll(' ', '-'); }
-        if (content.length > 500) { content = content.replace(/[?!¿¡.,:;]/g, '.').replaceAll('"', "'"); }
-        if (content.length > 500) { content = content.replace(/[^A-Za-z0-9.'-]/g, '_'); }
+        if (content.length > 500) {
+          content = content.replaceAll(' ', '-');
+        }
+        if (content.length > 500) {
+          content = content.replace(/[?!¿¡.,:;]/g, '.').replaceAll('"', "'");
+        }
+        if (content.length > 500) {
+          content = content.replace(/[^A-Za-z0-9.'-]/g, '_');
+        }
 
-        let query = serialize({ username, content, _stream: false });
+        let query = serialize({
+          username,
+          content,
+          _stream: false
+        });
         /* https://web-gpt-demo.com */
         feeder.push(Promise.race([fetchText(`/chat/?${query}`, options), sleep(2000)]));
-      } catch (e) { continue; }
+      } catch (e) {
+        continue;
+      }
     }
 
-
-
-    await /*Promise.race([*/Promise.all(feeder)/*,sleep(5000)])*/;
+    await /*Promise.race([*/ Promise.all(feeder) /*,sleep(5000)])*/ ;
 
     return 0;
   }
@@ -396,15 +412,17 @@ void async function Main() {
       }
     };
 
-
-
     let sends = [];
     sends.push(parallelCSESends(username, prompt));
     await Promise.race([Promise.all(sends), sleep(15000)]);
     await sleep(100);
     content = "Using the additional information, answer the following. " + prompt + " {at USAA}. Let's work this out in a step by step way to be sure we have the right answer";
 
-    query = serialize({ username, content, _stream: false });
+    query = serialize({
+      username,
+      content,
+      _stream: false
+    });
 
     let part1 = "";
     let part1_raw = "";
@@ -412,7 +430,6 @@ void async function Main() {
     part1_raw = await fetchText(`/chat/?${query}`, options);
     let json_answer = tryJSONRes(part1_raw);
     part1 = " " + json_answer;
-
 
     part1 = part1.split(',');
     if (part1[0].includes('ased on the')) {
@@ -430,7 +447,11 @@ void async function Main() {
     part1[0] = '';
     content = "expand on your previous response";
     //content = "continue";
-    let elab = serialize({ username, content, _stream: false });
+    let elab = serialize({
+      username,
+      content,
+      _stream: false
+    });
     let json_elab = "";
     let elab_raw = "";
 
@@ -438,7 +459,6 @@ void async function Main() {
 
     json_answer = tryJSONRes(elab_raw);
     json_elab = " " + json_answer;
-
 
     let part2 = json_elab.split('.');
     const part2_length = part2.length;
@@ -472,7 +492,9 @@ void async function Main() {
 
         }
 
-      } catch (e) { continue; }
+      } catch (e) {
+        continue;
+      }
     }
     full_msg[0] = full_msg[0].toUpperCase();
     full_msg = full_msg.join('')
@@ -496,13 +518,14 @@ void async function Main() {
 
   // Prepare the page to handle interaction
 
-
   document.addEventListener('load', firstMSG);
 
   firstMSG();
 
   async function firstMSG() {
-    if (document.fmg) { return; }
+    if (document.fmg) {
+      return;
+    }
     document.fmg = true;
     await sleep(200);
     fixHeight();
@@ -608,19 +631,14 @@ void async function Main() {
 
       txt = txt.replace('```', '<pre><code><span>').replace('```', '</span></code></pre>');
 
-
       last_msg.innerHTML = txt;
 
       await sleep(100);
       await formatCode();
     }
 
-
-
-
     return 0;
   }
-
 
   async function formatSnip() {
     let gpt_msgs = document.querySelectorAll('div.message.assistant>div.content');
@@ -629,7 +647,6 @@ void async function Main() {
     if (txt.indexOf('`') > -1) {
 
       txt = txt.replace('`', '<code>').replace('`', '</code>');
-
 
       last_msg.innerHTML = txt;
       await formatSnip();
@@ -640,28 +657,25 @@ void async function Main() {
   window.mobile = (navigator.userAgent.toLowerCase().indexOf('mobile') > -1);
 
   setInterval(fixHeight, 500);
-  function fixHeight() {
 
+  function fixHeight() {
 
     let chatWindow = document.querySelector('div.chat');
     if ((document.body.clientHeight > document.body.clientWidth) || (window.top != window)) {
 
-      if (chatWindow.style.maxWidth != '100vw') { chatWindow.style.maxWidth = '100vw'; }
+      if (chatWindow.style.maxWidth != '100vw') {
+        chatWindow.style.maxWidth = '100vw';
+      }
 
     } else {
 
-
-      if ((chatWindow.style.maxWidth != '90vw') && (!window.mobile)) { chatWindow.style.maxWidth = '90vw'; }
+      if ((chatWindow.style.maxWidth != '90vw') && (!window.mobile)) {
+        chatWindow.style.maxWidth = '90vw';
+      }
 
     }
 
-
-
-
   }
-
-
-
 
   function JSONExtract(raw, key) {
 
@@ -670,12 +684,7 @@ void async function Main() {
 
     return json_val;
 
-
   }
-
-
-
-
 
   async function cseFetch(query) {
 
@@ -687,9 +696,7 @@ void async function Main() {
 
     let preslice = (await fetchText(cse_url)).split('google.search.cse.api(')[1];
 
-
     let cse_res = tryJSONRu(preslice.slice(0, preslice.length - 2));
-
 
     let text = '';
     const results = cse_res;
@@ -721,23 +728,35 @@ void async function Main() {
     let webscrape = [];
     try {
       webscrape = await cseFetch(query);
-    } catch (e) { webscrape = []; }
+    } catch (e) {
+      webscrape = [];
+    }
     console.log(webscrape);
     const webscrape_length = webscrape.length;
     let feeder = [];
     for (let i = webscrape_length - 1; i > -1; i--) {
       try {
         let content = 'Additional information {' + webscrape[i] + '}';
-        if (content.length > 500) { content = content.replaceAll(' ', '-'); }
-        if (content.length > 500) { content = content.replace(/[?!¿¡.,;]/g, '.').replaceAll('"', "'"); }
-        if (content.length > 500) { content = content.replace(/[^A-Za-z0-9.'-]/g, '_'); }
-        let query = { username, content, _stream: false };
+        if (content.length > 500) {
+          content = content.replaceAll(' ', '-');
+        }
+        if (content.length > 500) {
+          content = content.replace(/[?!¿¡.,;]/g, '.').replaceAll('"', "'");
+        }
+        if (content.length > 500) {
+          content = content.replace(/[^A-Za-z0-9.'-]/g, '_');
+        }
+        let query = {
+          username,
+          content,
+          _stream: false
+        };
         /* https://web-gpt-demo.com */
         feeder.push(Promise.race([postChat, sleep(1000)]));
-      } catch (e) { continue; }
+      } catch (e) {
+        continue;
+      }
     }
-
-
 
     await Promise.race([Promise.all(feeder), sleep(15000)]);
 
@@ -760,8 +779,6 @@ void async function Main() {
     await sleep(2000);
     document.querySelector('[thinking]')?.setAttribute('thinking', 'Reflecting');
   }
-
-
 
   function tryJSON(obj) {
 
@@ -799,9 +816,10 @@ void async function Main() {
 
   }
 
-
   async function fetchWithTimeout(resource, options = {}) {
-    const { timeout = 5000 } = options;
+    const {
+      timeout = 5000
+    } = options;
 
     const controller = new AbortController();
     const id = setTimeout(Ж => controller.abort(), timeout, Ж);
@@ -815,7 +833,6 @@ void async function Main() {
     return response;
   }
 
-
   async function fetchText(url, options) {
     let txt = "";
     try {
@@ -825,8 +842,6 @@ void async function Main() {
     }
     return txt;
   }
-
-
 
   async function fetchTextWithTimeout(url, options) {
     let txt = "";
@@ -844,8 +859,6 @@ void async function Main() {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-
-
   function unpunctuate(str) {
     let s = str.replaceAll('?', ' ?.')
       .replaceAll('!', ' !.')
@@ -854,7 +867,6 @@ void async function Main() {
       .replaceAll(';', ' ;.');
 
     return s;
-
 
   }
 
@@ -868,12 +880,10 @@ void async function Main() {
     return s;
   }
 
-
   function stripTags(rawHTML) {
 
     let dom = document.createElement('dom');
     dom.innerHTML = rawHTML;
-
 
     const extra_tags = dom.querySelectorAll('head,link,meta,style,script');
     const extra_tags_length = extra_tags.length;
@@ -882,7 +892,9 @@ void async function Main() {
 
         extra_tags[i].remove();
 
-      } catch (e) { continue; }
+      } catch (e) {
+        continue;
+      }
     }
     return dom.textContent;
 

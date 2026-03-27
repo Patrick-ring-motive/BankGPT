@@ -39,5 +39,3 @@ globalThis.getChat = async function(data = {}) {
   response = await fetch(`/chat/?${query}`, options);
   return response.text();
 }
-
-

@@ -1,4 +1,5 @@
-function lcws(text1, text2) {/*longest common word subsequence*/
+function lcws(text1, text2) {
+  /*longest common word subsequence*/
   text1 = text1.toLowerCase().replace(/[^a-z ]/g, ' ').replaceAll('  ', ' ').replaceAll('  ', ' ').split(' ');
   text2 = text2.toLowerCase().replace(/[^a-z ]/g, ' ').replaceAll('  ', ' ').replaceAll('  ', ' ').split(' ');
 
