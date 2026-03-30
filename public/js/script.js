@@ -24,6 +24,7 @@ void async function Main() {
     }?.();
 
     void
+
     function SendPrimer() {
 
       document.addEventListener('load', prime);
