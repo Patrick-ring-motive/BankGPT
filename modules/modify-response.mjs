@@ -1,5 +1,3 @@
-
-
 export default function modifyResponse(res) {
 
   res = removeQuestions(res);
@@ -9,10 +7,7 @@ export default function modifyResponse(res) {
 
   res = res.replace(/the matrix/gi, 'USAA');
 
-
   res = res.replaceAll("User", 'Member');
-
-
 
   let resc = res.trim();
   if (resc[resc.length - 1] == ',') {
@@ -20,7 +15,7 @@ export default function modifyResponse(res) {
     res = resc;
 
   }
-  
+
   res = res.replaceAll('programming', 'financial services');
 
   if (res.indexOf('utocode') > -1) {
@@ -40,14 +35,16 @@ export default function modifyResponse(res) {
   return res;
 }
 
-
 function removeQuestions(text) {
-
 
   let qtext = text.replaceAll('.', '?').replaceAll('!', '?').trim();
   let qtext_list = qtext.split('?');
-  if (qtext_list.length < 3) { qtext_list = text.replaceAll('.', '?').replaceAll('!', '?').replaceAll(';', '?').replaceAll(':', '?')/*.replaceAll(',', '?')*/.trim().split('?'); }
-  if (qtext_list.length < 3) { return text; };
+  if (qtext_list.length < 3) {
+    qtext_list = text.replaceAll('.', '?').replaceAll('!', '?').replaceAll(';', '?').replaceAll(':', '?') /*.replaceAll(',', '?')*/ .trim().split('?');
+  }
+  if (qtext_list.length < 3) {
+    return text;
+  };
   let last_qtext = qtext_list[qtext_list.length - 2];
   if ((last_qtext.indexOf('I may help') > -1) ||
     (last_qtext.indexOf('ay I help') > -1) ||
