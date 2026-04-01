@@ -1,8 +1,5 @@
+export default async function modifyRequest(req) {
 
+  return req;
 
-export default async function modifyRequest(req){
-
-
-return req;
-  
 }
