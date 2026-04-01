@@ -1,9 +1,11 @@
 import jsdom from 'jsdom';
 import fetch from 'node-fetch';
-const { JSDOM } = jsdom;
+const {
+  JSDOM
+} = jsdom;
 
 export async function webscraper(reqUrl) {
-  
+
   let scrapeURL = decodeURIComponent(reqUrl.split('?')[1]);
 
   let rawHTML = (await (await fetch(scrapeURL)).text());
@@ -16,11 +18,12 @@ export async function webscraper(reqUrl) {
 
       extra_tags[i].remove();
 
-    } catch (e) { continue; }
+    } catch (e) {
+      continue;
+    }
   }
   let text = dom.window.document.body.textContent;
   text = text.replaceAll('\n', ' ').replaceAll('\t', ' ').replaceAll('\r', ' ').replaceAll('  ', ' ').replaceAll('  ', ' ').replaceAll('\n', ' ').replaceAll('\t', ' ').replaceAll('\r', ' ').replaceAll('  ', ' ').replaceAll('  ', ' ').replace(/[?!¿¡.;]/g, '.');
-
 
   let words = text.split(' ');
   let words_length = words.length;
@@ -33,7 +36,6 @@ export async function webscraper(reqUrl) {
     }
   }
 
-  
   return text;
 
 }
@@ -53,7 +55,9 @@ export async function wsPackage(reqUrl) {
 
       extra_tags[i].remove();
 
-    } catch (e) { continue; }
+    } catch (e) {
+      continue;
+    }
   }
   let text = dom.window.document.body.textContent;
   text = text.replaceAll('\n', ' ').replaceAll('\t', ' ').replaceAll('\r', ' ').replaceAll('  ', ' ').replaceAll('  ', ' ').replaceAll('\n', ' ').replaceAll('\t', ' ').replaceAll('\r', ' ').replaceAll('  ', ' ').replaceAll('  ', ' ').replace(/[?!¿¡.;]/g, '.');
@@ -85,6 +89,4 @@ export async function wsPackage(reqUrl) {
 
   return JSON.stringify(textPacks);
 
-
 }
-
